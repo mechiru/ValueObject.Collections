@@ -2,30 +2,30 @@ namespace ValueObject.Collections.Tests;
 
 public sealed class ListValueTest
 {
-    public static object?[][] TestDataEquality => new[]
-    {
-        new object?[] { null, null, true },
-        new object?[] { ListValue.Create(1, 2, 3), null, false },
-        new object?[] { null, ListValue.Create(1, 2, 3), false },
-        new object?[] { ListValue.Create(1, 2, 3), ListValue.Create(1, 2, 3), true },
-    };
+    public static object?[][] TestDataEquality =>
+    [
+        [null, null, true],
+        [ListValue.Create(1, 2, 3), null, false],
+        [null, ListValue.Create(1, 2, 3), false],
+        [ListValue.Create(1, 2, 3), ListValue.Create(1, 2, 3), true]
+    ];
 
     [Theory]
     [MemberData(nameof(TestDataEquality))]
     public void TestEquality(ListValue<int>? a, ListValue<int>? b, bool expected)
     {
         Assert.Equal(expected, EqualityComparer<ListValue<int>?>.Default.Equals(a, b));
-        Assert.Equal(expected, object.Equals(a, b));
+        Assert.Equal(expected, Equals(a, b));
         Assert.Equal(expected, a?.Equals(b) ?? b is null);
         Assert.Equal(expected, a == b);
     }
 
-    public static object?[][] TestDataToString => new[]
-    {
-        new object?[]{ null, null },
-        new object?[]{ListValue.Create<string>(), "[]" },
-        new object?[]{ListValue.Create<string>("a", "b"), "[a,b]" }
-    };
+    public static object?[][] TestDataToString =>
+    [
+        [null, null],
+        [ListValue.Create<string>(), "[]"],
+        [ListValue.Create<string>("a", "b"), "[a,b]"]
+    ];
 
     [Theory]
     [MemberData(nameof(TestDataToString))]
@@ -34,12 +34,12 @@ public sealed class ListValueTest
         Assert.Equal(expected, input?.ToString());
     }
 
-    public static object?[][] TestDataJson => new[]
-    {
-        new object?[] { "null", null },
-        new object?[] { "[]", ListValue.Create<int>() },
-        new object?[] { @"[1,2,3]", ListValue.Create(1, 2, 3) },
-    };
+    public static object?[][] TestDataJson =>
+    [
+        ["null", null],
+        ["[]", ListValue.Create<int>()],
+        ["[1,2,3]", ListValue.Create(1, 2, 3)]
+    ];
 
     [Theory]
     [MemberData(nameof(TestDataJson))]
