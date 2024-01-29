@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <Using Include="Xunit" />
-        <Using Include="System.Text.Json" />
     </ItemGroup>
 
     <ItemGroup>

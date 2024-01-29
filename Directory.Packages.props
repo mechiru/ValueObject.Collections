@@ -1,13 +1,22 @@
 <Project>
+    <PropertyGroup>
+        <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management#enabling-central-package-management -->
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+        <EnablePackageVersionOverride>false</EnablePackageVersionOverride>
+        <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management#warning-when-using-multiple-package-sources -->
+        <NoWarn>$(NoWarn);NU1507</NoWarn>
+    </PropertyGroup>
+
     <ItemGroup>
         <!-- Test dependencies -->
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-        <PackageVersion Include="xunit" Version="2.4.1" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.3">
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+        <PackageVersion Include="xunit" Version="2.6.6" />
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.6">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
-        <PackageVersion Include="coverlet.collector" Version="3.1.2">
+        <PackageVersion Include="coverlet.collector" Version="6.0.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
