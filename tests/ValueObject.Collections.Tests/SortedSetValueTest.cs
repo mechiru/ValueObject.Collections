@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ValueObject.Collections.Tests;
 
 public sealed class SortedSetValueTest
@@ -48,5 +50,12 @@ public sealed class SortedSetValueTest
         var actual = JsonSerializer.Deserialize<SortedSetValue<int>>(json);
         Assert.Equal(expected, actual);
         Assert.Equal(json, JsonSerializer.Serialize(actual));
+
+        actual = JsonSerializer.Deserialize<SortedSetValue<int>>(json, SortedSetValueJsonContext.Default.Options);
+        Assert.Equal(expected, actual);
+        Assert.Equal(json, JsonSerializer.Serialize(actual, SortedSetValueJsonContext.Default.Options));
     }
 }
+
+[JsonSerializable(typeof(SortedSetValue<int>))]
+internal sealed partial class SortedSetValueJsonContext : JsonSerializerContext;

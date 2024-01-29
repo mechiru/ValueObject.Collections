@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ValueObject.Collections.Tests;
 
 public sealed class ListValueTest
@@ -48,5 +50,12 @@ public sealed class ListValueTest
         var actual = JsonSerializer.Deserialize<ListValue<int>>(json);
         Assert.Equal(expected, actual);
         Assert.Equal(json, JsonSerializer.Serialize(actual));
+
+        actual = JsonSerializer.Deserialize<ListValue<int>>(json, ListValueJsonContext.Default.Options);
+        Assert.Equal(expected, actual);
+        Assert.Equal(json, JsonSerializer.Serialize(actual, ListValueJsonContext.Default.Options));
     }
 }
+
+[JsonSerializable(typeof(ListValue<int>))]
+internal sealed partial class ListValueJsonContext : JsonSerializerContext;

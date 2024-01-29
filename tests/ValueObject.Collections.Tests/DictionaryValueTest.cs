@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ValueObject.Collections.Tests;
 
 public sealed class DictionaryValueTest
@@ -48,5 +50,12 @@ public sealed class DictionaryValueTest
         var actual = JsonSerializer.Deserialize<DictionaryValue<string, int>>(json);
         Assert.Equal(expected, actual);
         Assert.Equal(json, JsonSerializer.Serialize(actual));
+
+        actual = JsonSerializer.Deserialize<DictionaryValue<string, int>>(json, DictionaryValueJsonContext.Default.Options);
+        Assert.Equal(expected, actual);
+        Assert.Equal(json, JsonSerializer.Serialize(actual, DictionaryValueJsonContext.Default.Options));
     }
 }
+
+[JsonSerializable(typeof(DictionaryValue<string, int>))]
+internal sealed partial class DictionaryValueJsonContext : JsonSerializerContext;

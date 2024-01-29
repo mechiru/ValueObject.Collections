@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ValueObject.Collections.Tests;
 
 public sealed class HashSetValueTest
@@ -48,5 +50,12 @@ public sealed class HashSetValueTest
         var actual = JsonSerializer.Deserialize<HashSetValue<int>>(json);
         Assert.Equal(expected, actual);
         Assert.Equal(json, JsonSerializer.Serialize(actual));
+
+        actual = JsonSerializer.Deserialize<HashSetValue<int>>(json, HashSetValueJsonContext.Default.Options);
+        Assert.Equal(expected, actual);
+        Assert.Equal(json, JsonSerializer.Serialize(actual, HashSetValueJsonContext.Default.Options));
     }
 }
+
+[JsonSerializable(typeof(HashSetValue<int>))]
+internal sealed partial class HashSetValueJsonContext : JsonSerializerContext;
