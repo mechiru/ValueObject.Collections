@@ -3,24 +3,23 @@ name: pub
 on:
   push:
     tags:
-    - 'v*'
+      - 'v*'
 
 jobs:
   publish:
-
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-    - run: dotnet restore -v n
-    - run: dotnet build --no-restore -v n
-    - run: dotnet test --no-build -v n
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet restore -v n
+      - run: dotnet build --no-restore -v n
+      - run: dotnet test --no-build -v n
 
-    # publish
-    - run: dotnet build --configuration Release --no-restore -p:Version=${GITHUB_REF/refs\/tags\/v/}
-    - run: dotnet pack src/ValueObject.Collections --configuration Release --no-build --output nupkgs -p:PackageVersion=${GITHUB_REF/refs\/tags\/v/}
-    - run: dotnet nuget push nupkgs/*.nupkg --skip-duplicate -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      # publish
+      - run: dotnet build --configuration Release --no-restore -p:Version=${GITHUB_REF/refs\/tags\/v/}
+      - run: dotnet pack src/ValueObject.Collections --configuration Release --no-build --output nupkgs -p:PackageVersion=${GITHUB_REF/refs\/tags\/v/}
+      - run: dotnet nuget push nupkgs/*.nupkg --skip-duplicate -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
