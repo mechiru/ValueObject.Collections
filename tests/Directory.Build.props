@@ -1,0 +1,31 @@
+<Project>
+
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..\'))" />
+
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit" />
+        <Using Include="System.Text.Json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+        <PackageReference Include="coverlet.collector" />
+    </ItemGroup>
+
+    <!-- Add test target project reference. -->
+    <PropertyGroup>
+        <TestTargetProjectName>$([System.Text.RegularExpressions.Regex]::Replace($(MSBuildProjectName), "\.Tests$", ""))</TestTargetProjectName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\$(TestTargetProjectName)\$(TestTargetProjectName).csproj" />
+    </ItemGroup>
+
+</Project>
