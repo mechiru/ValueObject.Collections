@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace ValueObject.Collections;
 
 internal static class Helper
